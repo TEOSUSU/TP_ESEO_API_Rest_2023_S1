@@ -24,7 +24,7 @@ public class VilleController {
 			@RequestParam(required = false, value = "orderByName") String orderByName,
 			@RequestParam(required = false, value = "orderByPostalCode") String orderByPostalCode,
 			@RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE) {
-		ArrayList<Ville> villeList = new ArrayList<Ville>();
+		ArrayList<Ville> villeList = new ArrayList<>();
 
 		if (name != null) {
 			villeList = villeBLO.getInfoVilles(name);
