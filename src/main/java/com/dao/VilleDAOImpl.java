@@ -52,32 +52,32 @@ public class VilleDAOImpl implements VilleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
-			connexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			// Fermeture de la connexion
-			try {
-				closeAllSQLFiles(resultat, statement, connexion);
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connexion != null) {
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (resultat != null) {
+				try {
+					resultat.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return listVille;
-	}
-
-	private static void closeAllSQLFiles(ResultSet resultat, Statement statement, Connection connexion)
-			throws SQLException {
-		if (resultat != null) {
-			resultat.close();
-		}
-		if (statement != null) {
-			statement.close();
-		}
-		if (connexion != null) {
-			connexion.close();
-		}
 	}
 
 	public ArrayList<Ville> findAllVillesOrderByName() {
@@ -116,9 +116,30 @@ public class VilleDAOImpl implements VilleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			connexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connexion != null) {
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (resultat != null) {
+				try {
+					resultat.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return listVille;
 	}
@@ -161,9 +182,30 @@ public class VilleDAOImpl implements VilleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			connexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connexion != null) {
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (resultat != null) {
+				try {
+					resultat.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return ville;
 	}
@@ -204,9 +246,30 @@ public class VilleDAOImpl implements VilleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			connexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connexion != null) {
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (resultat != null) {
+				try {
+					resultat.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return listVille;
 	}
@@ -238,9 +301,24 @@ public class VilleDAOImpl implements VilleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			connexion.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connexion != null) {
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -271,9 +349,23 @@ public class VilleDAOImpl implements VilleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			connexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connexion != null) {
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -292,9 +384,23 @@ public class VilleDAOImpl implements VilleDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			connexion.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (connexion != null) {
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
