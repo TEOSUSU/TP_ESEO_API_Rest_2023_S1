@@ -3,12 +3,15 @@ package com.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DaoFactory {
 	private String url;
 	private String username;
 	private String password;
-
+	private static final Logger logger = LoggerFactory.getLogger(DaoFactory.class);
+	
 	DaoFactory(String url, String username, String password) {
 		this.url = url;
 		this.username = username;
@@ -19,7 +22,7 @@ public class DaoFactory {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		}
 		return new DaoFactory("jdbc:mysql://localhost:3306/twic", "root", "");
 	}
@@ -31,7 +34,7 @@ public class DaoFactory {
 			connexion.setAutoCommit(false);
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		}
 		return connexion;
 	}
