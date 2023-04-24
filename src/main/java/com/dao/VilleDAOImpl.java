@@ -17,7 +17,52 @@ public class VilleDAOImpl implements VilleDAO {
 
 	private DaoFactory daoFactory = DaoFactory.getInstance();
 	private static final Logger logger = LoggerFactory.getLogger(DaoFactory.class);
-	
+
+	private void loggerError(SQLException e) {
+		logger.error("Erreur lors de l'exécution", e);
+	}
+
+	private void finallyGetCatchBlock(PreparedStatement statement, Connection connexion, ResultSet resultat) {
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				loggerError(e);
+			}
+		}
+		if (connexion != null) {
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				loggerError(e);
+			}
+		}
+		if (resultat != null) {
+			try {
+				resultat.close();
+			} catch (SQLException e) {
+				loggerError(e);
+			}
+		}
+	}
+
+	private void finallyNotGetCatchBlock(PreparedStatement statement, Connection connexion) {
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				loggerError(e);
+			}
+		}
+		if (connexion != null) {
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				loggerError(e);
+			}
+		}
+	}
+
 	public ArrayList<Ville> findAllVilles() {
 		ArrayList<Ville> listVille = new ArrayList<>();
 		Connection connexion = null;
@@ -51,32 +96,12 @@ public class VilleDAOImpl implements VilleDAO {
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
-				logger.error("Erreur lors de l'exécution", e);
+				loggerError(e);
 			}
 		} catch (SQLException e) {
-			logger.error("Erreur lors de l'exécution", e);
+			loggerError(e);
 		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (connexion != null) {
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (resultat != null) {
-				try {
-					resultat.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
 	}
@@ -115,32 +140,12 @@ public class VilleDAOImpl implements VilleDAO {
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
-				logger.error("Erreur lors de l'exécution", e);
+				loggerError(e);
 			}
 		} catch (SQLException e) {
-			logger.error("Erreur lors de l'exécution", e);
+			loggerError(e);
 		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (connexion != null) {
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (resultat != null) {
-				try {
-					resultat.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
 	}
@@ -155,58 +160,34 @@ public class VilleDAOImpl implements VilleDAO {
 		try {
 			connexion = daoFactory.getConnection();
 			try {
-				if (codeCommuneINSEE == null) {
-					System.out.println("Les champs ne sont pas tous remplis");
-				} else {
-					statement = connexion.prepareStatement("SELECT * FROM ville_france WHERE Code_commune_INSEE = ?");
-					statement.setString(1, codeCommuneINSEE);
-					resultat = statement.executeQuery();
+				statement = connexion.prepareStatement("SELECT * FROM ville_france WHERE Code_commune_INSEE = ?");
+				statement.setString(1, codeCommuneINSEE);
+				resultat = statement.executeQuery();
 
-					while (resultat.next()) {
-						String codeCommune = resultat.getString("Code_commune_INSEE");
-						String nomCommune = resultat.getString("Nom_commune");
-						String codePostal = resultat.getString("Code_postal");
-						String libelleAcheminement = resultat.getString("Libelle_acheminement");
-						String ligne5 = resultat.getString("Ligne_5");
-						String latitude = resultat.getString("Latitude");
-						String longitude = resultat.getString("Longitude");
+				while (resultat.next()) {
+					String codeCommune = resultat.getString("Code_commune_INSEE");
+					String nomCommune = resultat.getString("Nom_commune");
+					String codePostal = resultat.getString("Code_postal");
+					String libelleAcheminement = resultat.getString("Libelle_acheminement");
+					String ligne5 = resultat.getString("Ligne_5");
+					String latitude = resultat.getString("Latitude");
+					String longitude = resultat.getString("Longitude");
 
-						ville.setCodeCommune(codeCommune);
-						ville.setNomCommune(nomCommune);
-						ville.setCodePostal(codePostal);
-						ville.setLibelleAcheminement(libelleAcheminement);
-						ville.setLigne(ligne5);
-						ville.setLatitude(latitude);
-						ville.setLongitude(longitude);
-					}
+					ville.setCodeCommune(codeCommune);
+					ville.setNomCommune(nomCommune);
+					ville.setCodePostal(codePostal);
+					ville.setLibelleAcheminement(libelleAcheminement);
+					ville.setLigne(ligne5);
+					ville.setLatitude(latitude);
+					ville.setLongitude(longitude);
 				}
 			} catch (SQLException e) {
-				logger.error("Erreur lors de l'exécution", e);
+				loggerError(e);
 			}
 		} catch (SQLException e) {
-			logger.error("Erreur lors de l'exécution", e);
+			loggerError(e);
 		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (connexion != null) {
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (resultat != null) {
-				try {
-					resultat.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return ville;
 	}
@@ -245,32 +226,12 @@ public class VilleDAOImpl implements VilleDAO {
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
-				logger.error("Erreur lors de l'exécution", e);
+				loggerError(e);
 			}
 		} catch (SQLException e) {
-			logger.error("Erreur lors de l'exécution", e);
+			loggerError(e);
 		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (connexion != null) {
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (resultat != null) {
-				try {
-					resultat.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
 	}
@@ -283,43 +244,24 @@ public class VilleDAOImpl implements VilleDAO {
 		try {
 			connexion = daoFactory.getConnection();
 			try {
-				if (codeCommune == null || nomCommune == null || codePostal == null || libelleAcheminement == null
-						|| ligne == null || latitude == null || longitude == null) {
-					System.out.println("Les champs ne sont pas tous remplis");
-				} else {
-					statement = connexion.prepareStatement(
-							"INSERT INTO ville_france (Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement, Ligne_5, Latitude, Longitude) "
-									+ "VALUES (?, ?, ?, ?, ?, ?, ?);");
-					statement.setString(1, codeCommune);
-					statement.setString(2, nomCommune);
-					statement.setString(3, codePostal);
-					statement.setString(4, libelleAcheminement);
-					statement.setString(5, ligne);
-					statement.setString(6, latitude);
-					statement.setString(7, longitude);
-					statement.executeUpdate();
-				}
+				statement = connexion.prepareStatement(
+						"INSERT INTO ville_france (Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement, Ligne_5, Latitude, Longitude) "
+								+ "VALUES (?, ?, ?, ?, ?, ?, ?);");
+				statement.setString(1, codeCommune);
+				statement.setString(2, nomCommune);
+				statement.setString(3, codePostal);
+				statement.setString(4, libelleAcheminement);
+				statement.setString(5, ligne);
+				statement.setString(6, latitude);
+				statement.setString(7, longitude);
+				statement.executeUpdate();
 			} catch (SQLException e) {
-				logger.error("Erreur lors de l'exécution", e);
+				loggerError(e);
 			}
-
 		} catch (SQLException e) {
-			logger.error("Erreur lors de l'exécution", e);
+			loggerError(e);
 		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (connexion != null) {
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
+			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 
@@ -331,42 +273,25 @@ public class VilleDAOImpl implements VilleDAO {
 		try {
 			connexion = daoFactory.getConnection();
 			try {
-				if (codeCommune == null || nomCommune == null || codePostal == null || libelleAcheminement == null
-						|| ligne == null || latitude == null || longitude == null) {
-					System.out.println("Les champs ne sont pas tous remplis");
-				} else {
-					statement = connexion.prepareStatement(
-							"UPDATE ville_france SET Code_commune_INSEE=?, Nom_commune=?, Code_postal=?, Libelle_acheminement=?, Ligne_5=?, Latitude=?, Longitude=? WHERE Code_postal=?;");
-					statement.setString(1, codeCommune);
-					statement.setString(2, nomCommune);
-					statement.setString(3, codePostal);
-					statement.setString(4, libelleAcheminement);
-					statement.setString(5, ligne);
-					statement.setString(6, latitude);
-					statement.setString(7, longitude);
-					statement.setString(8, codePostalAModifier);
-					statement.executeUpdate();
-				}
+				statement = connexion.prepareStatement(
+						"UPDATE ville_france SET Code_commune_INSEE=?, Nom_commune=?, Code_postal=?, Libelle_acheminement=?, Ligne_5=?, Latitude=?, Longitude=? WHERE Code_postal=?;");
+				statement.setString(1, codeCommune);
+				statement.setString(2, nomCommune);
+				statement.setString(3, codePostal);
+				statement.setString(4, libelleAcheminement);
+				statement.setString(5, ligne);
+				statement.setString(6, latitude);
+				statement.setString(7, longitude);
+				statement.setString(8, codePostalAModifier);
+				statement.executeUpdate();
+
 			} catch (SQLException e) {
-				logger.error("Erreur lors de l'exécution", e);
+				loggerError(e);
 			}
 		} catch (SQLException e) {
-			logger.error("Erreur lors de l'exécution", e);
+			loggerError(e);
 		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (connexion != null) {
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
+			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 
@@ -383,25 +308,12 @@ public class VilleDAOImpl implements VilleDAO {
 				statement.setString(2, codeCommune);
 				statement.executeUpdate();
 			} catch (SQLException e) {
-				logger.error("Erreur lors de l'exécution", e);
+				loggerError(e);
 			}
 		} catch (SQLException e) {
-			logger.error("Erreur lors de l'exécution", e);
+			loggerError(e);
 		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
-			if (connexion != null) {
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					logger.error("Erreur lors de l'exécution", e);
-				}
-			}
+			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 
