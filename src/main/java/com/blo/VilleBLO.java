@@ -1,15 +1,16 @@
 package com.blo;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import com.dto.Ville;
 
 public interface VilleBLO {
 
-	public ArrayList<Ville> getInfoVilles(String codePostal);
+	public List<Ville> getInfoVilles(String codePostal);
 
-	public ArrayList<Ville> getInfoVilleOrderByName();
+	public List<Ville> getInfoVilleOrderByName();
 
-	public ArrayList<Ville> getInfoVilleOrderByPostalCode();
+	public List<Ville> getInfoVilleOrderByPostalCode();
 	
 	public Ville getVilleByCodeCommune(String codeCommuneINSEE);
 

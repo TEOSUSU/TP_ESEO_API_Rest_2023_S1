@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,8 +71,8 @@ public class VilleDAOImpl implements VilleDAO {
 		return ville;
 	}
 
-	public ArrayList<Ville> findAllVilles() {
-		ArrayList<Ville> listVille = new ArrayList<>();
+	public List<Ville> findAllVilles() {
+		List<Ville> listVille = new ArrayList<>();
 		Connection connexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultat = null;
@@ -87,8 +88,8 @@ public class VilleDAOImpl implements VilleDAO {
 		return listVille;
 	}
 
-	public ArrayList<Ville> findAllVillesOrderByName() {
-		ArrayList<Ville> listVille = new ArrayList<>();
+	public List<Ville> findAllVillesOrderByName() {
+		List<Ville> listVille = new ArrayList<>();
 
 		Connection connexion = null;
 		PreparedStatement statement = null;
@@ -121,8 +122,8 @@ public class VilleDAOImpl implements VilleDAO {
 		return ville;
 	}
 
-	public ArrayList<Ville> findAllVillesOrderByPostalCode() {
-		ArrayList<Ville> listVille = new ArrayList<>();
+	public List<Ville> findAllVillesOrderByPostalCode() {
+		List<Ville> listVille = new ArrayList<>();
 
 		Connection connexion = null;
 		PreparedStatement statement = null;
@@ -181,8 +182,8 @@ public class VilleDAOImpl implements VilleDAO {
 		}
 	}
 
-	private ArrayList<Ville> findAllVillesStatement(PreparedStatement statement, Connection connexion,
-			ResultSet resultat, ArrayList<Ville> listVille) {
+	private List<Ville> findAllVillesStatement(PreparedStatement statement, Connection connexion,
+			ResultSet resultat, List<Ville> listVille) {
 		try {
 			statement = connexion.prepareStatement("SELECT * FROM ville_france");
 			resultat = statement.executeQuery();
@@ -198,8 +199,8 @@ public class VilleDAOImpl implements VilleDAO {
 		return listVille;
 	}
 
-	private ArrayList<Ville> findAllVilleOrderByNameStatement(PreparedStatement statement, Connection connexion,
-			ResultSet resultat, ArrayList<Ville> listVille) {
+	private List<Ville> findAllVilleOrderByNameStatement(PreparedStatement statement, Connection connexion,
+			ResultSet resultat, List<Ville> listVille) {
 		try {
 			statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Nom_commune");
 			resultat = statement.executeQuery();
@@ -231,8 +232,8 @@ public class VilleDAOImpl implements VilleDAO {
 		return ville;
 	}
 
-	private ArrayList<Ville> findAllVilleOrderByCodePostalStatement(PreparedStatement statement, Connection connexion,
-			ResultSet resultat, ArrayList<Ville> listVille) {
+	private List<Ville> findAllVilleOrderByCodePostalStatement(PreparedStatement statement, Connection connexion,
+			ResultSet resultat, List<Ville> listVille) {
 		try {
 			statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Code_Postal ASC");
 			resultat = statement.executeQuery();

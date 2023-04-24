@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +21,11 @@ public class VilleController {
 
 	@RequestMapping(value = "/ville", method = RequestMethod.GET)
 	@ResponseBody
-	public ArrayList<Ville> appelGet(@RequestParam(required = false, value = "name") String name,
+	public List<Ville> appelGet(@RequestParam(required = false, value = "name") String name,
 			@RequestParam(required = false, value = "orderByName") String orderByName,
 			@RequestParam(required = false, value = "orderByPostalCode") String orderByPostalCode,
 			@RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE) {
-		ArrayList<Ville> villeList = new ArrayList<>();
+		List<Ville> villeList = new ArrayList<>();
 
 		if (name != null) {
 			villeList = villeBLO.getInfoVilles(name);
