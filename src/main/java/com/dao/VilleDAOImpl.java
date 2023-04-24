@@ -82,9 +82,7 @@ public class VilleDAOImpl implements VilleDAO {
 			findAllVillesStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		} finally {
-			finallyGetCatchBlock(statement, connexion, resultat);
-		}
+		} 
 		return listVille;
 	}
 
@@ -100,8 +98,6 @@ public class VilleDAOImpl implements VilleDAO {
 			findAllVilleOrderByNameStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		} finally {
-			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
 	}
@@ -116,8 +112,6 @@ public class VilleDAOImpl implements VilleDAO {
 			findAllVilleOrderByCodeCommuneStatement(statement, connexion, resultat, ville, codeCommuneINSEE);
 		} catch (SQLException e) {
 			loggerError(e);
-		} finally {
-			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return ville;
 	}
@@ -134,9 +128,7 @@ public class VilleDAOImpl implements VilleDAO {
 			findAllVilleOrderByCodePostalStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		} finally {
-			finallyGetCatchBlock(statement, connexion, resultat);
-		}
+		} 
 		return listVille;
 	}
 
@@ -149,8 +141,6 @@ public class VilleDAOImpl implements VilleDAO {
 			insertVilleStatement(statement, connexion, ville);
 		} catch (SQLException e) {
 			loggerError(e);
-		} finally {
-			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 
@@ -163,9 +153,7 @@ public class VilleDAOImpl implements VilleDAO {
 			updateVilleStatement(statement, connexion, ville, codePostalAModifier);
 		} catch (SQLException e) {
 			loggerError(e);
-		} finally {
-			finallyNotGetCatchBlock(statement, connexion);
-		}
+		} 
 	}
 
 	public void supprimerVilleByNomAndCode(String codePostal, String codeCommune) {
@@ -177,8 +165,6 @@ public class VilleDAOImpl implements VilleDAO {
 			deleteVilleStatement(statement, connexion, codePostal, codeCommune);
 		} catch (SQLException e) {
 			loggerError(e);
-		} finally {
-			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 
@@ -195,6 +181,8 @@ public class VilleDAOImpl implements VilleDAO {
 			}
 		} catch (SQLException e) {
 			loggerError(e);
+		}finally {
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
 	}
@@ -212,6 +200,8 @@ public class VilleDAOImpl implements VilleDAO {
 			}
 		} catch (SQLException e) {
 			loggerError(e);
+		}finally {
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
 	}
@@ -228,6 +218,8 @@ public class VilleDAOImpl implements VilleDAO {
 			}
 		} catch (SQLException e) {
 			loggerError(e);
+		}finally {
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return ville;
 	}
@@ -245,6 +237,8 @@ public class VilleDAOImpl implements VilleDAO {
 			}
 		} catch (SQLException e) {
 			loggerError(e);
+		}finally {
+			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
 	}
@@ -264,6 +258,8 @@ public class VilleDAOImpl implements VilleDAO {
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			loggerError(e);
+		}finally {
+			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 
@@ -284,6 +280,8 @@ public class VilleDAOImpl implements VilleDAO {
 
 		} catch (SQLException e) {
 			loggerError(e);
+		}finally {
+			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 
@@ -297,6 +295,8 @@ public class VilleDAOImpl implements VilleDAO {
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			loggerError(e);
+		}finally {
+			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
 }
