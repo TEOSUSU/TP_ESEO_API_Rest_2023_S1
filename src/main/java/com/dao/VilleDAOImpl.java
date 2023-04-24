@@ -82,7 +82,7 @@ public class VilleDAOImpl implements VilleDAO {
 			findAllVillesStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		} 
+		}
 		return listVille;
 	}
 
@@ -128,7 +128,7 @@ public class VilleDAOImpl implements VilleDAO {
 			findAllVilleOrderByCodePostalStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		} 
+		}
 		return listVille;
 	}
 
@@ -153,7 +153,7 @@ public class VilleDAOImpl implements VilleDAO {
 			updateVilleStatement(statement, connexion, ville, codePostalAModifier);
 		} catch (SQLException e) {
 			loggerError(e);
-		} 
+		}
 	}
 
 	public void supprimerVilleByNomAndCode(String codePostal, String codeCommune) {
@@ -168,20 +168,16 @@ public class VilleDAOImpl implements VilleDAO {
 		}
 	}
 
-	private List<Ville> findAllVillesStatement(PreparedStatement statement, Connection connexion,
-			ResultSet resultat, List<Ville> listVille) {
+	private List<Ville> findAllVillesStatement(PreparedStatement statement, Connection connexion, ResultSet resultat,
+			List<Ville> listVille) {
 		try {
 			statement = connexion.prepareStatement("SELECT * FROM ville_france");
 			resultat = statement.executeQuery();
 
-			while (resultat.next()) {
-				Ville ville = new Ville();
-				ville = getStringVille(resultat, ville);
-				listVille.add(ville);
-			}
+			whileGetVille(resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		}finally {
+		} finally {
 			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
@@ -192,15 +188,10 @@ public class VilleDAOImpl implements VilleDAO {
 		try {
 			statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Nom_commune");
 			resultat = statement.executeQuery();
-
-			while (resultat.next()) {
-				Ville ville = new Ville();
-				ville = getStringVille(resultat, ville);
-				listVille.add(ville);
-			}
+			whileGetVille(resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		}finally {
+		} finally {
 			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
@@ -218,7 +209,7 @@ public class VilleDAOImpl implements VilleDAO {
 			}
 		} catch (SQLException e) {
 			loggerError(e);
-		}finally {
+		} finally {
 			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return ville;
@@ -230,14 +221,10 @@ public class VilleDAOImpl implements VilleDAO {
 			statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Code_Postal ASC");
 			resultat = statement.executeQuery();
 
-			while (resultat.next()) {
-				Ville ville = new Ville();
-				ville = getStringVille(resultat, ville);
-				listVille.add(ville);
-			}
+			whileGetVille(resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
-		}finally {
+		} finally {
 			finallyGetCatchBlock(statement, connexion, resultat);
 		}
 		return listVille;
@@ -258,7 +245,7 @@ public class VilleDAOImpl implements VilleDAO {
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			loggerError(e);
-		}finally {
+		} finally {
 			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
@@ -280,7 +267,7 @@ public class VilleDAOImpl implements VilleDAO {
 
 		} catch (SQLException e) {
 			loggerError(e);
-		}finally {
+		} finally {
 			finallyNotGetCatchBlock(statement, connexion);
 		}
 	}
@@ -295,8 +282,17 @@ public class VilleDAOImpl implements VilleDAO {
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			loggerError(e);
-		}finally {
+		} finally {
 			finallyNotGetCatchBlock(statement, connexion);
 		}
+	}
+
+	private List<Ville> whileGetVille(ResultSet resultat, List<Ville> listVille) throws SQLException {
+		while (resultat.next()) {
+			Ville ville = new Ville();
+			ville = getStringVille(resultat, ville);
+			listVille.add(ville);
+		}
+		return listVille;
 	}
 }
