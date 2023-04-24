@@ -49,7 +49,7 @@ public class VilleDAOImpl implements VilleDAO {
 			}
 		}
 	}
-	
+
 	private Ville getStringVille(ResultSet resultat, Ville ville) throws SQLException {
 		String codeCommune = resultat.getString("Code_commune_INSEE");
 		String nomCommune = resultat.getString("Nom_commune");
@@ -58,7 +58,7 @@ public class VilleDAOImpl implements VilleDAO {
 		String ligne5 = resultat.getString("Ligne_5");
 		String latitude = resultat.getString("Latitude");
 		String longitude = resultat.getString("Longitude");
-		
+
 		ville.setCodeCommune(codeCommune);
 		ville.setNomCommune(nomCommune);
 		ville.setCodePostal(codePostal);
@@ -66,7 +66,7 @@ public class VilleDAOImpl implements VilleDAO {
 		ville.setLigne(ligne5);
 		ville.setLatitude(latitude);
 		ville.setLongitude(longitude);
-		
+
 		return ville;
 	}
 
@@ -78,18 +78,7 @@ public class VilleDAOImpl implements VilleDAO {
 
 		try {
 			connexion = daoFactory.getConnection();
-			try {
-				statement = connexion.prepareStatement("SELECT * FROM ville_france");
-				resultat = statement.executeQuery();
-
-				while (resultat.next()) {
-					Ville ville = new Ville();
-					ville = getStringVille(resultat,ville);
-					listVille.add(ville);
-				}
-			} catch (SQLException e) {
-				loggerError(e);
-			}
+			findAllVillesStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
 		} finally {
@@ -107,18 +96,7 @@ public class VilleDAOImpl implements VilleDAO {
 
 		try {
 			connexion = daoFactory.getConnection();
-			try {
-				statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Nom_commune");
-				resultat = statement.executeQuery();
-
-				while (resultat.next()) {
-					Ville ville = new Ville();
-					ville = getStringVille(resultat,ville);
-					listVille.add(ville);
-				}
-			} catch (SQLException e) {
-				loggerError(e);
-			}
+			findAllVilleOrderByNameStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
 		} finally {
@@ -131,22 +109,10 @@ public class VilleDAOImpl implements VilleDAO {
 		Connection connexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultat = null;
-
 		Ville ville = new Ville();
-
 		try {
 			connexion = daoFactory.getConnection();
-			try {
-				statement = connexion.prepareStatement("SELECT * FROM ville_france WHERE Code_commune_INSEE = ?");
-				statement.setString(1, codeCommuneINSEE);
-				resultat = statement.executeQuery();
-
-				while (resultat.next()) {
-					ville = getStringVille(resultat,ville);
-				}
-			} catch (SQLException e) {
-				loggerError(e);
-			}
+			findAllVilleOrderByCodeCommuneStatement(statement, connexion, resultat, ville, codeCommuneINSEE);
 		} catch (SQLException e) {
 			loggerError(e);
 		} finally {
@@ -164,18 +130,7 @@ public class VilleDAOImpl implements VilleDAO {
 
 		try {
 			connexion = daoFactory.getConnection();
-			try {
-				statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Code_Postal ASC");
-				resultat = statement.executeQuery();
-
-				while (resultat.next()) {
-					Ville ville = new Ville();
-					ville = getStringVille(resultat,ville);
-					listVille.add(ville);
-				}
-			} catch (SQLException e) {
-				loggerError(e);
-			}
+			findAllVilleOrderByCodePostalStatement(statement, connexion, resultat, listVille);
 		} catch (SQLException e) {
 			loggerError(e);
 		} finally {
@@ -184,28 +139,13 @@ public class VilleDAOImpl implements VilleDAO {
 		return listVille;
 	}
 
-	public void insertVille(String codePostal, String nomCommune, String codeCommune, String libelleAcheminement,
-			String ligne, String latitude, String longitude) {
+	public void insertVille(Ville ville) {
 		Connection connexion = null;
 		PreparedStatement statement = null;
 
 		try {
 			connexion = daoFactory.getConnection();
-			try {
-				statement = connexion.prepareStatement(
-						"INSERT INTO ville_france (Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement, Ligne_5, Latitude, Longitude) "
-								+ "VALUES (?, ?, ?, ?, ?, ?, ?);");
-				statement.setString(1, codeCommune);
-				statement.setString(2, nomCommune);
-				statement.setString(3, codePostal);
-				statement.setString(4, libelleAcheminement);
-				statement.setString(5, ligne);
-				statement.setString(6, latitude);
-				statement.setString(7, longitude);
-				statement.executeUpdate();
-			} catch (SQLException e) {
-				loggerError(e);
-			}
+			insertVilleStatement(statement, connexion, ville);
 		} catch (SQLException e) {
 			loggerError(e);
 		} finally {
@@ -219,22 +159,7 @@ public class VilleDAOImpl implements VilleDAO {
 
 		try {
 			connexion = daoFactory.getConnection();
-			try {
-				statement = connexion.prepareStatement(
-						"UPDATE ville_france SET Code_commune_INSEE=?, Nom_commune=?, Code_postal=?, Libelle_acheminement=?, Ligne_5=?, Latitude=?, Longitude=? WHERE Code_postal=?;");
-				statement.setString(1, ville.getCodeCommune());
-				statement.setString(2, ville.getNomCommune());
-				statement.setString(3, ville.getCodePostal());
-				statement.setString(4, ville.getLibelleAcheminement());
-				statement.setString(5, ville.getligne());
-				statement.setString(6, ville.getLatitude());
-				statement.setString(7, ville.getLongitude());
-				statement.setString(8, codePostalAModifier);
-				statement.executeUpdate();
-
-			} catch (SQLException e) {
-				loggerError(e);
-			}
+			updateVilleStatement(statement, connexion, ville, codePostalAModifier);
 		} catch (SQLException e) {
 			loggerError(e);
 		} finally {
@@ -248,15 +173,7 @@ public class VilleDAOImpl implements VilleDAO {
 
 		try {
 			connexion = daoFactory.getConnection();
-			try {
-				statement = connexion
-						.prepareStatement("DELETE FROM ville_france WHERE Code_postal=? AND Code_commune_INSEE=?");
-				statement.setString(1, codePostal);
-				statement.setString(2, codeCommune);
-				statement.executeUpdate();
-			} catch (SQLException e) {
-				loggerError(e);
-			}
+			deleteVilleStatement(statement, connexion, codePostal, codeCommune);
 		} catch (SQLException e) {
 			loggerError(e);
 		} finally {
@@ -264,4 +181,121 @@ public class VilleDAOImpl implements VilleDAO {
 		}
 	}
 
+	private ArrayList<Ville> findAllVillesStatement(PreparedStatement statement, Connection connexion,
+			ResultSet resultat, ArrayList<Ville> listVille) {
+		try {
+			statement = connexion.prepareStatement("SELECT * FROM ville_france");
+			resultat = statement.executeQuery();
+
+			while (resultat.next()) {
+				Ville ville = new Ville();
+				ville = getStringVille(resultat, ville);
+				listVille.add(ville);
+			}
+		} catch (SQLException e) {
+			loggerError(e);
+		}
+		return listVille;
+	}
+
+	private ArrayList<Ville> findAllVilleOrderByNameStatement(PreparedStatement statement, Connection connexion,
+			ResultSet resultat, ArrayList<Ville> listVille) {
+		try {
+			statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Nom_commune");
+			resultat = statement.executeQuery();
+
+			while (resultat.next()) {
+				Ville ville = new Ville();
+				ville = getStringVille(resultat, ville);
+				listVille.add(ville);
+			}
+		} catch (SQLException e) {
+			loggerError(e);
+		}
+		return listVille;
+	}
+
+	private Ville findAllVilleOrderByCodeCommuneStatement(PreparedStatement statement, Connection connexion,
+			ResultSet resultat, Ville ville, String codeCommuneINSEE) {
+		try {
+			statement = connexion.prepareStatement("SELECT * FROM ville_france WHERE Code_commune_INSEE = ?");
+			statement.setString(1, codeCommuneINSEE);
+			resultat = statement.executeQuery();
+
+			while (resultat.next()) {
+				ville = getStringVille(resultat, ville);
+			}
+		} catch (SQLException e) {
+			loggerError(e);
+		}
+		return ville;
+	}
+
+	private ArrayList<Ville> findAllVilleOrderByCodePostalStatement(PreparedStatement statement, Connection connexion,
+			ResultSet resultat, ArrayList<Ville> listVille) {
+		try {
+			statement = connexion.prepareStatement("SELECT * FROM ville_france ORDER BY Code_Postal ASC");
+			resultat = statement.executeQuery();
+
+			while (resultat.next()) {
+				Ville ville = new Ville();
+				ville = getStringVille(resultat, ville);
+				listVille.add(ville);
+			}
+		} catch (SQLException e) {
+			loggerError(e);
+		}
+		return listVille;
+	}
+
+	private void insertVilleStatement(PreparedStatement statement, Connection connexion, Ville ville) {
+		try {
+			statement = connexion.prepareStatement(
+					"INSERT INTO ville_france (Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement, Ligne_5, Latitude, Longitude) "
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?);");
+			statement.setString(1, ville.getCodeCommune());
+			statement.setString(2, ville.getNomCommune());
+			statement.setString(3, ville.getCodePostal());
+			statement.setString(4, ville.getLibelleAcheminement());
+			statement.setString(5, ville.getligne());
+			statement.setString(6, ville.getLatitude());
+			statement.setString(7, ville.getLongitude());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			loggerError(e);
+		}
+	}
+
+	private void updateVilleStatement(PreparedStatement statement, Connection connexion, Ville ville,
+			String codePostalAModifier) {
+		try {
+			statement = connexion.prepareStatement(
+					"UPDATE ville_france SET Code_commune_INSEE=?, Nom_commune=?, Code_postal=?, Libelle_acheminement=?, Ligne_5=?, Latitude=?, Longitude=? WHERE Code_postal=?;");
+			statement.setString(1, ville.getCodeCommune());
+			statement.setString(2, ville.getNomCommune());
+			statement.setString(3, ville.getCodePostal());
+			statement.setString(4, ville.getLibelleAcheminement());
+			statement.setString(5, ville.getligne());
+			statement.setString(6, ville.getLatitude());
+			statement.setString(7, ville.getLongitude());
+			statement.setString(8, codePostalAModifier);
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			loggerError(e);
+		}
+	}
+
+	private void deleteVilleStatement(PreparedStatement statement, Connection connexion, String codePostal,
+			String codeCommune) {
+		try {
+			statement = connexion
+					.prepareStatement("DELETE FROM ville_france WHERE Code_postal=? AND Code_commune_INSEE=?");
+			statement.setString(1, codePostal);
+			statement.setString(2, codeCommune);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			loggerError(e);
+		}
+	}
 }

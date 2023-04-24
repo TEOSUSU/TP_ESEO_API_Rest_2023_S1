@@ -13,8 +13,7 @@ public interface VilleBLO {
 	
 	public Ville getVilleByCodeCommune(String codeCommuneINSEE);
 
-	public void insertVille(String codePostal, String nomCommune, String codeCommune, String libelleAcheminement,
-			String ligne, String longitude, String latitude);
+	public void insertVille(Ville ville);
 
 	public void actualiserVilleByCodePostal(Ville ville, String codePostalAModifier);
 	

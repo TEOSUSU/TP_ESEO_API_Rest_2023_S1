@@ -14,8 +14,7 @@ public interface VilleDAO {
 	
 	public Ville getVilleByCodeCommune(String codeCommuneINSEE);
 
-	public void insertVille(String codePostal, String nomCommune, String codeCommune, String libelleAcheminement,
-			String ligne, String latitude, String longitude);
+	public void insertVille(Ville ville);
 
 	public void actualiserVilleByCodePostal(Ville ville, String codePostalAModifier);
 

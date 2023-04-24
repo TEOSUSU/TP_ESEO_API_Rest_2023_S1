@@ -52,7 +52,15 @@ public class VilleController {
 			@RequestParam(required = false, value = "ligne") String ligne,
 			@RequestParam(required = false, value = "longitude") String longitude,
 			@RequestParam(required = false, value = "latitude") String latitude) {
-		villeBLO.insertVille(codePostal, nomCommune, codeCommune, libelleAcheminement, ligne, longitude, latitude);
+		Ville ville = new Ville();
+		ville.setCodeCommune(codeCommune);
+		ville.setNomCommune(nomCommune);
+		ville.setCodePostal(codePostal);
+		ville.setLibelleAcheminement(libelleAcheminement);
+		ville.setLigne(ligne);
+		ville.setLatitude(latitude);
+		ville.setLongitude(longitude);
+		villeBLO.insertVille(ville);
 	}
 
 	@RequestMapping(value = "/ville", method = RequestMethod.PUT)
