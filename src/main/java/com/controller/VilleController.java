@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,22 +67,8 @@ public class VilleController {
 
 	@RequestMapping(value = "/ville", method = RequestMethod.PUT)
 	@ResponseBody
-	public void appelPut(@RequestParam(required = false, value = "codePostal") String codePostal,
-			@RequestParam(required = false, value = "nomCommune") String nomCommune,
-			@RequestParam(required = false, value = "codeCommune") String codeCommune,
-			@RequestParam(required = false, value = "libelleAcheminement") String libelleAcheminement,
-			@RequestParam(required = false, value = "ligne") String ligne,
-			@RequestParam(required = false, value = "longitude") String longitude,
-			@RequestParam(required = false, value = "latitude") String latitude,
+	public void appelPut(@ModelAttribute Ville ville,
 			@RequestParam(required = false, value = "codePostalActualiser") String codePostalAActualiser) {
-		Ville ville = new Ville();
-		ville.setCodeCommune(codeCommune);
-		ville.setNomCommune(nomCommune);
-		ville.setCodePostal(codePostal);
-		ville.setLibelleAcheminement(libelleAcheminement);
-		ville.setLigne(ligne);
-		ville.setLatitude(latitude);
-		ville.setLongitude(longitude);
 		villeBLO.actualiserVilleByCodePostal(ville, codePostalAActualiser);
 	}
 
