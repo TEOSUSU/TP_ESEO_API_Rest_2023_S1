@@ -252,8 +252,7 @@ public class VilleDAOImpl implements VilleDAO {
 		}
 	}
 
-	public void actualiserVilleByCodePostal(String codePostal, String nomCommune, String codeCommune,
-			String libelleAcheminement, String ligne, String latitude, String longitude, String codePostalAModifier) {
+	public void actualiserVilleByCodePostal(Ville ville, String codePostalAModifier) {
 		Connection connexion = null;
 		PreparedStatement statement = null;
 
@@ -262,13 +261,13 @@ public class VilleDAOImpl implements VilleDAO {
 			try {
 				statement = connexion.prepareStatement(
 						"UPDATE ville_france SET Code_commune_INSEE=?, Nom_commune=?, Code_postal=?, Libelle_acheminement=?, Ligne_5=?, Latitude=?, Longitude=? WHERE Code_postal=?;");
-				statement.setString(1, codeCommune);
-				statement.setString(2, nomCommune);
-				statement.setString(3, codePostal);
-				statement.setString(4, libelleAcheminement);
-				statement.setString(5, ligne);
-				statement.setString(6, latitude);
-				statement.setString(7, longitude);
+				statement.setString(1, ville.getCodeCommune());
+				statement.setString(2, ville.getNomCommune());
+				statement.setString(3, ville.getCodePostal());
+				statement.setString(4, ville.getLibelleAcheminement());
+				statement.setString(5, ville.getligne());
+				statement.setString(6, ville.getLatitude());
+				statement.setString(7, ville.getLongitude());
 				statement.setString(8, codePostalAModifier);
 				statement.executeUpdate();
 

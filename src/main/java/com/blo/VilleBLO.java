@@ -16,8 +16,7 @@ public interface VilleBLO {
 	public void insertVille(String codePostal, String nomCommune, String codeCommune, String libelleAcheminement,
 			String ligne, String longitude, String latitude);
 
-	public void actualiserVilleByCodePostal(String codePostal, String nomCommune, String codeCommune,
-			String libelleAcheminement, String ligne, String longitude, String latitude, String codePostalAModifier);
+	public void actualiserVilleByCodePostal(Ville ville, String codePostalAModifier);
 	
 	public void supprimerVilleByNomAndCode(String codePostal, String codeCommune);
 

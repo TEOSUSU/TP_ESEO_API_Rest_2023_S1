@@ -65,8 +65,15 @@ public class VilleController {
 			@RequestParam(required = false, value = "longitude") String longitude,
 			@RequestParam(required = false, value = "latitude") String latitude,
 			@RequestParam(required = false, value = "codePostalActualiser") String codePostalAActualiser) {
-		villeBLO.actualiserVilleByCodePostal(codePostal, nomCommune, codeCommune, libelleAcheminement, ligne, longitude,
-				latitude, codePostalAActualiser);
+		Ville ville = new Ville();
+		ville.setCodeCommune(codeCommune);
+		ville.setNomCommune(nomCommune);
+		ville.setCodePostal(codePostal);
+		ville.setLibelleAcheminement(libelleAcheminement);
+		ville.setLigne(ligne);
+		ville.setLatitude(latitude);
+		ville.setLongitude(longitude);
+		villeBLO.actualiserVilleByCodePostal(ville, codePostalAActualiser);
 	}
 
 	@RequestMapping(value = "/ville", method = RequestMethod.DELETE)

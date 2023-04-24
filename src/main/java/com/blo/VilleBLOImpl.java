@@ -35,10 +35,8 @@ public class VilleBLOImpl implements VilleBLO {
 		villeDAO.insertVille(codePostal, nomCommune, codeCommune, libelleAcheminement, ligne, longitude, latitude);
 	}
 
-	public void actualiserVilleByCodePostal(String codePostal, String nomCommune, String codeCommune,
-			String libelleAcheminement, String ligne, String longitude, String latitude, String codePostalAModifier) {
-		villeDAO.actualiserVilleByCodePostal(codePostal, nomCommune, codeCommune, libelleAcheminement, ligne, longitude,
-				latitude, codePostalAModifier);
+	public void actualiserVilleByCodePostal(Ville ville, String codePostalAModifier) {
+		villeDAO.actualiserVilleByCodePostal(ville, codePostalAModifier);
 	}
 
 	public void supprimerVilleByNomAndCode(String codePostal, String codeCommune) {
