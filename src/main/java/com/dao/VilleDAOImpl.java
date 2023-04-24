@@ -1,13 +1,13 @@
 package com.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Ville;
@@ -16,7 +16,8 @@ import com.dto.Ville;
 public class VilleDAOImpl implements VilleDAO {
 
 	private DaoFactory daoFactory = DaoFactory.getInstance();
-
+	private static final Logger logger = LoggerFactory.getLogger(DaoFactory.class);
+	
 	public ArrayList<Ville> findAllVilles() {
 		ArrayList<Ville> listVille = new ArrayList<>();
 		Connection connexion = null;
@@ -50,30 +51,30 @@ public class VilleDAOImpl implements VilleDAO {
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erreur lors de l'exécution", e);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (connexion != null) {
 				try {
 					connexion.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (resultat != null) {
 				try {
 					resultat.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 		}
@@ -114,30 +115,30 @@ public class VilleDAOImpl implements VilleDAO {
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erreur lors de l'exécution", e);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (connexion != null) {
 				try {
 					connexion.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (resultat != null) {
 				try {
 					resultat.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 		}
@@ -180,30 +181,30 @@ public class VilleDAOImpl implements VilleDAO {
 					}
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erreur lors de l'exécution", e);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (connexion != null) {
 				try {
 					connexion.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (resultat != null) {
 				try {
 					resultat.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 		}
@@ -244,30 +245,30 @@ public class VilleDAOImpl implements VilleDAO {
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erreur lors de l'exécution", e);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (connexion != null) {
 				try {
 					connexion.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (resultat != null) {
 				try {
 					resultat.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 		}
@@ -299,24 +300,24 @@ public class VilleDAOImpl implements VilleDAO {
 					statement.executeUpdate();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erreur lors de l'exécution", e);
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (connexion != null) {
 				try {
 					connexion.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 		}
@@ -347,23 +348,23 @@ public class VilleDAOImpl implements VilleDAO {
 					statement.executeUpdate();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erreur lors de l'exécution", e);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (connexion != null) {
 				try {
 					connexion.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 		}
@@ -382,23 +383,23 @@ public class VilleDAOImpl implements VilleDAO {
 				statement.setString(2, codeCommune);
 				statement.executeUpdate();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error("Erreur lors de l'exécution", e);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Erreur lors de l'exécution", e);
 		} finally {
 			if (statement != null) {
 				try {
 					statement.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 			if (connexion != null) {
 				try {
 					connexion.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					logger.error("Erreur lors de l'exécution", e);
 				}
 			}
 		}
