@@ -19,16 +19,20 @@ public class DaoFactory {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-
+			e.printStackTrace();
 		}
-
-		DaoFactory instance = new DaoFactory("jdbc:mysql://localhost:3306/twic", "root", "");
-		return instance;
+		return new DaoFactory("jdbc:mysql://localhost:3306/twic", "root", "");
 	}
 
 	public Connection getConnection() throws SQLException {
-		Connection connexion = DriverManager.getConnection(url, username, password);
-		connexion.setAutoCommit(false);
+		Connection connexion = null;
+		try {
+			connexion = DriverManager.getConnection(url, username, password);
+			connexion.setAutoCommit(false);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return connexion;
 	}
 

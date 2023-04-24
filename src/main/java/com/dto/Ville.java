@@ -65,4 +65,5 @@ public class Ville {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
+	
 }
