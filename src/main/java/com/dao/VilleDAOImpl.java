@@ -49,6 +49,26 @@ public class VilleDAOImpl implements VilleDAO {
 			}
 		}
 	}
+	
+	private Ville getStringVille(ResultSet resultat, Ville ville) throws SQLException {
+		String codeCommune = resultat.getString("Code_commune_INSEE");
+		String nomCommune = resultat.getString("Nom_commune");
+		String codePostal = resultat.getString("Code_postal");
+		String libelleAcheminement = resultat.getString("Libelle_acheminement");
+		String ligne5 = resultat.getString("Ligne_5");
+		String latitude = resultat.getString("Latitude");
+		String longitude = resultat.getString("Longitude");
+		
+		ville.setCodeCommune(codeCommune);
+		ville.setNomCommune(nomCommune);
+		ville.setCodePostal(codePostal);
+		ville.setLibelleAcheminement(libelleAcheminement);
+		ville.setLigne(ligne5);
+		ville.setLatitude(latitude);
+		ville.setLongitude(longitude);
+		
+		return ville;
+	}
 
 	public ArrayList<Ville> findAllVilles() {
 		ArrayList<Ville> listVille = new ArrayList<>();
@@ -63,23 +83,8 @@ public class VilleDAOImpl implements VilleDAO {
 				resultat = statement.executeQuery();
 
 				while (resultat.next()) {
-					String codeCommune = resultat.getString("Code_commune_INSEE");
-					String nomCommune = resultat.getString("Nom_commune");
-					String codePostal = resultat.getString("Code_postal");
-					String libelleAcheminement = resultat.getString("Libelle_acheminement");
-					String ligne5 = resultat.getString("ligne_5");
-					String latitude = resultat.getString("latitude");
-					String longitude = resultat.getString("longitude");
-
 					Ville ville = new Ville();
-					ville.setCodeCommune(codeCommune);
-					ville.setNomCommune(nomCommune);
-					ville.setCodePostal(codePostal);
-					ville.setLibelleAcheminement(libelleAcheminement);
-					ville.setLigne(ligne5);
-					ville.setLatitude(latitude);
-					ville.setLongitude(longitude);
-
+					ville = getStringVille(resultat,ville);
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
@@ -107,23 +112,8 @@ public class VilleDAOImpl implements VilleDAO {
 				resultat = statement.executeQuery();
 
 				while (resultat.next()) {
-					String codeCommune = resultat.getString("Code_commune_INSEE");
-					String nomCommune = resultat.getString("Nom_commune");
-					String codePostal = resultat.getString("Code_postal");
-					String libelleAcheminement = resultat.getString("Libelle_acheminement");
-					String ligne5 = resultat.getString("Ligne_5");
-					String latitude = resultat.getString("Latitude");
-					String longitude = resultat.getString("Longitude");
-
 					Ville ville = new Ville();
-					ville.setCodeCommune(codeCommune);
-					ville.setNomCommune(nomCommune);
-					ville.setCodePostal(codePostal);
-					ville.setLibelleAcheminement(libelleAcheminement);
-					ville.setLigne(ligne5);
-					ville.setLatitude(latitude);
-					ville.setLongitude(longitude);
-
+					ville = getStringVille(resultat,ville);
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
@@ -152,21 +142,7 @@ public class VilleDAOImpl implements VilleDAO {
 				resultat = statement.executeQuery();
 
 				while (resultat.next()) {
-					String codeCommune = resultat.getString("Code_commune_INSEE");
-					String nomCommune = resultat.getString("Nom_commune");
-					String codePostal = resultat.getString("Code_postal");
-					String libelleAcheminement = resultat.getString("Libelle_acheminement");
-					String ligne5 = resultat.getString("Ligne_5");
-					String latitude = resultat.getString("Latitude");
-					String longitude = resultat.getString("Longitude");
-
-					ville.setCodeCommune(codeCommune);
-					ville.setNomCommune(nomCommune);
-					ville.setCodePostal(codePostal);
-					ville.setLibelleAcheminement(libelleAcheminement);
-					ville.setLigne(ligne5);
-					ville.setLatitude(latitude);
-					ville.setLongitude(longitude);
+					ville = getStringVille(resultat,ville);
 				}
 			} catch (SQLException e) {
 				loggerError(e);
@@ -193,23 +169,8 @@ public class VilleDAOImpl implements VilleDAO {
 				resultat = statement.executeQuery();
 
 				while (resultat.next()) {
-					String codeCommune = resultat.getString("Code_commune_INSEE");
-					String nomCommune = resultat.getString("Nom_commune");
-					String codePostal = resultat.getString("Code_postal");
-					String libelleAcheminement = resultat.getString("Libelle_acheminement");
-					String ligne5 = resultat.getString("Ligne_5");
-					String latitude = resultat.getString("Latitude");
-					String longitude = resultat.getString("Longitude");
-
 					Ville ville = new Ville();
-					ville.setCodeCommune(codeCommune);
-					ville.setNomCommune(nomCommune);
-					ville.setCodePostal(codePostal);
-					ville.setLibelleAcheminement(libelleAcheminement);
-					ville.setLigne(ligne5);
-					ville.setLatitude(latitude);
-					ville.setLongitude(longitude);
-
+					ville = getStringVille(resultat,ville);
 					listVille.add(ville);
 				}
 			} catch (SQLException e) {
