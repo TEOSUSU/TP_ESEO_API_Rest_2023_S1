@@ -23,20 +23,7 @@ public class VilleDAOImpl implements VilleDAO {
 	}
 
 	private void finallyGetCatchBlock(PreparedStatement statement, Connection connexion, ResultSet resultat) {
-		if (statement != null) {
-			try {
-				statement.close();
-			} catch (SQLException e) {
-				loggerError(e);
-			}
-		}
-		if (connexion != null) {
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				loggerError(e);
-			}
-		}
+		finallyNotGetCatchBlock(statement, connexion);
 		if (resultat != null) {
 			try {
 				resultat.close();
@@ -107,7 +94,7 @@ public class VilleDAOImpl implements VilleDAO {
 	}
 
 	public ArrayList<Ville> findAllVillesOrderByName() {
-		ArrayList<Ville> listVille = new ArrayList<Ville>();
+		ArrayList<Ville> listVille = new ArrayList<>();
 
 		Connection connexion = null;
 		PreparedStatement statement = null;
@@ -193,7 +180,7 @@ public class VilleDAOImpl implements VilleDAO {
 	}
 
 	public ArrayList<Ville> findAllVillesOrderByPostalCode() {
-		ArrayList<Ville> listVille = new ArrayList<Ville>();
+		ArrayList<Ville> listVille = new ArrayList<>();
 
 		Connection connexion = null;
 		PreparedStatement statement = null;

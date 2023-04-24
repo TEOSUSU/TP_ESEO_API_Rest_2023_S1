@@ -10,7 +10,6 @@ public class Application {
 		  if (args.length != 1) {
 		    System.exit(1);
 		  }
-		  String inputFileName = args[0];
 		  SpringApplication.run(Application.class, args);
 		}
 
